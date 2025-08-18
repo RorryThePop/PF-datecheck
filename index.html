@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PF Checker - Monitor de Vagas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">🔍</div>
+                <h1>PF Checker</h1>
+            </div>
+            <p class="subtitle">Monitor de Vagas - Polícia Federal</p>
+        </header>
+
+        <main class="main-content">
+            <div class="status-card">
+                <div class="status-header">
+                    <h2>Status do Monitoramento</h2>
+                    <div class="status-indicator" id="statusIndicator">
+                        <div class="status-dot"></div>
+                        <span id="statusText">Iniciando...</span>
+                    </div>
+                </div>
+                
+                <div class="last-check">
+                    <p>Última verificação: <span id="lastCheck">--</span></p>
+                    <p>Próxima verificação: <span id="nextCheck">--</span></p>
+                </div>
+            </div>
+
+            <div class="results-card">
+                <h3>Resultados</h3>
+                <div class="results-content" id="resultsContent">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Aguardando primeira verificação...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="startBtn" class="btn btn-primary">Iniciar Monitoramento</button>
+                <button id="stopBtn" class="btn btn-secondary" disabled>Parar Monitoramento</button>
+                <button id="checkNowBtn" class="btn btn-outline">Verificar Agora</button>
+            </div>
+
+            <div class="settings">
+                <h3>Configurações</h3>
+                <div class="setting-group">
+                    <label for="intervalInput">Intervalo de verificação (segundos):</label>
+                    <input type="number" id="intervalInput" value="30" min="10" max="300">
+                </div>
+                <div class="setting-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="useProxyCheckbox" checked>
+                        <span class="checkmark"></span>
+                        Usar proxy (contorna CORS)
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label for="urlInput">URL da API:</label>
+                    <input type="text" id="urlInput" value="http://localhost:8080/api/data-bloqueada/mes-ano/11/2025/124/2?codigoSolicitacao=A20251052913">
+                    <small class="url-hint">URL direta: https://servicos.dpf.gov.br/agenda-publico-rest/api/data-bloqueada/mes-ano/11/2025/124/2?codigoSolicitacao=A20251052913</small>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 PF Checker - Desenvolvido para facilitar o agendamento</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
