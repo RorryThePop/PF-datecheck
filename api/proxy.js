@@ -1,7 +1,7 @@
 const https = require('https');
 const http = require('http');
 
-ж// Функция для Vercel
+// Функция для Vercel
 module.exports = async (req, res) => {
   return handleRequest(req, res);
 };
