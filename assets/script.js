@@ -7,7 +7,6 @@ class PFChecker {
         
         this.initializeElements();
         this.bindEvents();
-        this.updateApiUrl(); // Inicializar URL baseada no checkbox
         this.updateStatus('Aguardando início do monitoramento', 'inactive');
     }
 
@@ -23,8 +22,7 @@ class PFChecker {
             stopBtn: document.getElementById('stopBtn'),
             checkNowBtn: document.getElementById('checkNowBtn'),
             intervalInput: document.getElementById('intervalInput'),
-            urlInput: document.getElementById('urlInput'),
-            useProxyCheckbox: document.getElementById('useProxyCheckbox')
+            urlInput: document.getElementById('urlInput')
         };
     }
 
@@ -41,9 +39,7 @@ class PFChecker {
             this.apiUrl = e.target.value;
         });
 
-        this.elements.useProxyCheckbox.addEventListener('change', (e) => {
-            this.updateApiUrl();
-        });
+
     }
 
     updateStatus(text, type = 'active') {
@@ -142,33 +138,7 @@ class PFChecker {
         return 'https://servicos.dpf.gov.br/agenda-publico-rest/api/data-bloqueada/mes-ano/11/2025/124/2?codigoSolicitacao=A20251052913';
     }
 
-    // Função para obter a URL do proxy
-    getProxyApiUrl() {
-        const monthYear = this.extractMonthYearFromUrl(this.apiUrl);
-        // Detectar se estamos em produção (Vercel) ou local
-        const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-        const baseUrl = isProduction ? window.location.origin : 'http://localhost:8080';
-        
-        if (monthYear) {
-            return `${baseUrl}/api/data-bloqueada/mes-ano/${monthYear.month}/${monthYear.year}/124/2?codigoSolicitacao=A20251052913`;
-        }
-        return `${baseUrl}/api/data-bloqueada/mes-ano/11/2025/124/2?codigoSolicitacao=A20251052913`;
-    }
 
-    // Função para atualizar a URL baseada no checkbox
-    updateApiUrl() {
-        const useProxy = this.elements.useProxyCheckbox.checked;
-        
-        if (useProxy) {
-            this.apiUrl = this.getProxyApiUrl();
-            this.elements.urlInput.value = this.apiUrl;
-        } else {
-            this.apiUrl = this.getDirectApiUrl();
-            this.elements.urlInput.value = this.apiUrl;
-        }
-        
-        console.log(`🔄 ${useProxy ? 'Proxy' : 'Direto'} ativado: ${this.apiUrl}`);
-    }
 
     async checkAvailability() {
         try {
